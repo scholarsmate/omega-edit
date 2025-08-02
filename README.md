@@ -30,8 +30,17 @@
 
 ## Goal
 
-The goal of this project is to provide an open source library for building editors that can handle massive files, and
+The goal of this project is to provide an open source library for building editors that can handle massive files and
 multiple viewports.
+
+## Key Features
+
+- **Massive file support** – edit content of virtually any size without loading entire files into memory
+- **Multiple viewports** – open independent, synchronized windows into the same editing session
+- **Robust change tracking** – undo/redo, checkpoints, and transactional editing
+- **Event-driven architecture** – subscribe to session and viewport events for real-time updates
+- **Rich analysis utilities** – search, byte frequency profiles, content type and language detection
+- **gRPC and Node.js bindings** – integrate with a gRPC server and TypeScript client for cross-language use
 
 ## User documentation
 
@@ -44,7 +53,6 @@ User documentation is published to https://ctc-oss.github.io/omega-edit/.
 
 - **C/C++ compiler** (such as clang, gcc, mingw, or MSVC)
 - **CMake** (https://cmake.org/download/)
-- **conan** C/C++ package manager (https://conan.io)
 - **git** for version control (https://git-scm.com)
 - **make** or **ninja** for running the build scripts (https://www.gnu.org/software/make/ or https://ninja-build.org)
 - **nvm** or **nodeenv** for using specific versions of node.js
@@ -63,21 +71,15 @@ Studio Code](https://code.visualstudio.com/) also works well.
 
 ## Build the core library (C/C++)
 
+
 :exclamation: These commands should be executed at the root level of the repository :exclamation:
-
-### Install conan:
-
-Conan is the package manager used to install the C/C++ dependencies.  It can be installed via pip.
-
-```bash
-pip install conan
-```
 
 ### Configure a build:
 
 Depending on your linking needs, Ωedit™ can be built _either_ as a static (e.g., libomega_edit.a) or shared
-(e.g., libomega_edit.so) library.  `Release` or `Debug` versions can be created.  Example programs and documentation can
-also be built if desired.  The Scala server _requires_ a shared library.
+(e.g., libomega_edit.so) library. `Release` or `Debug` versions can be created. Example programs and documentation can
+also be built if desired. The Scala server _requires_ a shared library. All required third-party libraries are fetched
+automatically during the CMake configure step; no external package manager is required.
 
 Here is how to build a debug version of a shared library, with no documentation or example programs.
 
@@ -105,7 +107,7 @@ ctest --build-config Debug --test-dir _build/core --output-on-failure
 
 ### Install the core library:
 
-We're installing in a directory named `_install` in the root of the repository.  This is is where the Scala server will
+We're installing in a directory named `_install` in the root of the repository.  This is where the Scala server will
 look for the shared library by default or it can use the OE_LIB_DIR environment variable if different than the default
 location.  If you just want to use the library itself, you can install it anywhere you like (e.g., `/usr/local`).
 
