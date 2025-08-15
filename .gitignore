@@ -65,6 +65,8 @@ project
 
 ## typescript
 **/*.js.map
+!packages/client/dist/**/*.js.map
+!packages/client/dist/**/*.d.ts.map
 **/out/
 .server_pid
 doc/

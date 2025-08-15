@@ -4,5 +4,5 @@
   "name": "Ωedit TypeScript Client Documentation",
   "readme": "README.md",
   "out": "doc/",
-  "tsconfig": "./tsconfig.json"
+  "tsconfig": "./tsconfig.esm.json"
 }

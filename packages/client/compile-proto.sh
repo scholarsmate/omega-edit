@@ -12,9 +12,9 @@ set -e
 # implied.  See the License for the specific language governing permissions and limitations under the License.
 
 IN_DIR="../../proto"
-PROTOC="$(yarn bin)/grpc_tools_node_protoc"
-PROTOC_GEN_TS_PATH="$(yarn bin)/protoc-gen-ts"
-PROTOC_GEN_GRPC_PATH="$(yarn bin)/grpc_tools_node_protoc_plugin"
+PROTOC="$(yarn bin grpc_tools_node_protoc)"
+PROTOC_GEN_TS_PATH="$(yarn bin protoc-gen-ts)"
+PROTOC_GEN_GRPC_PATH="$(yarn bin grpc_tools_node_protoc_plugin)"
 
 for dir in "src" "out"; do
     OUT_DIR=$PWD/$dir
