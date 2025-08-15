@@ -3,8 +3,19 @@
   "version": "0.9.88",
   "description": "OmegaEdit gRPC Client",
   "publisher": "ctc-oss",
-  "main": "./main.js",
-  "types": "./index.d.ts",
+  "main": "./dist/cjs/index.cjs",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/esm/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.cjs"
+    }
+  },
+  "files": [
+    "dist/**"
+  ],
   "repository": {
     "url": "https://github.com/ctc-oss/omega-edit",
     "type": "git"
@@ -15,15 +26,18 @@
   "author": "CTC-OSS",
   "license": "Apache-2.0",
   "scripts": {
-    "build": "webpack --mode=production",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "build:cjs": "tsc -p tsconfig.cjs.json && node scripts/rename-cjs.js dist/cjs",
+    "build": "rm -rf dist && node scripts/gen-client-version.js && yarn build:esm && yarn build:cjs",
+    "prepare": "yarn build",
     "compile-src": "run-script-os",
     "compile-src:default": "./compile-proto.sh",
     "compile-src:windows": "./compile-proto.bat",
     "docgen": "typedoc",
-    "prepackage": "yarn compile-src && yarn build && yarn --cwd out cache clean",
+    "prepackage": "yarn compile-src && yarn build",
     "package": "run-script-os",
-    "package:default": "yarn --cwd out pack --install-if-needed -f omega-edit-node-client-v${npm_package_version}.tgz",
-    "package:windows": "yarn --cwd out pack --install-if-needed -f omega-edit-node-client-v%npm_package_version%.tgz",
+    "package:default": "yarn pack --install-if-needed -f omega-edit-node-client-v${npm_package_version}.tgz",
+    "package:windows": "yarn pack --install-if-needed -f omega-edit-node-client-v%npm_package_version%.tgz",
     "install-client-local": "run-script-os",
     "install-client-local:default": "yarn add file://$INIT_CWD/omega-edit-node-client-v${npm_package_version}.tgz",
     "install-client-local:windows": "yarn add file:%INIT_CWD%/omega-edit-node-client-v%npm_package_version%.tgz",
@@ -32,8 +46,8 @@
     "test:lifecycle": "mocha --timeout 50000 --slow 35000 --require ts-node/register ./tests/specs/server.spec.ts --exit",
     "test": "(yarn test:lifecycle && yarn test:client) || (yarn posttest && exit 1)",
     "posttest": "yarn remove @omega-edit/client",
-    "lint": "prettier --check package.json webpack.config.js src tests && eslint .",
-    "lint:fix": "prettier --write package.json webpack.config.js src tests && eslint --fix ."
+    "lint": "prettier --check package.json src tests && eslint .",
+    "lint:fix": "prettier --write package.json src tests && eslint --fix ."
   },
   "devDependencies": {
     "clean-webpack-plugin": "^4.0.0",
