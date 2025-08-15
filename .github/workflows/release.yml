@@ -28,7 +28,7 @@ jobs:
     name: Quality Gate
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Count lines of code (CLOC) 📐
         id: cloc
@@ -133,7 +133,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Export git tag and package.json version 🚢
         run: ${{ env.export_cmd }}
@@ -173,14 +173,14 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Export git tag and package.json version 🚢
         run: ${{ env.export_cmd }}
         shell: bash
 
       - name: Download upload_url 🔻
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: upload_url
 
@@ -338,13 +338,13 @@ jobs:
     needs: [scala-publish]
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Export git tag and package.json version 🚢
         run: ${{ env.export_cmd }}
 
       - name: Download upload_url 🔻
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: upload_url
 
@@ -363,7 +363,7 @@ jobs:
           node-version: ${{ env.node_version }}
 
       - name: Download scala release file 🔻
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: omega-edit-grpc-server-${{ env.PKG_VERSION }}.zip
           path: omega-edit-grpc-server-${{ env.PKG_VERSION }}.zip
